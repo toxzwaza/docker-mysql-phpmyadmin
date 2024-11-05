@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: Phpmy@dm1n
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: administrator
+      MYSQL_PASSWORD: Phpmy@dm1n
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: your_root_password
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+
+networks:
+  my_network:
+
